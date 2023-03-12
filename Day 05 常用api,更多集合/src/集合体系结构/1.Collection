@@ -1,0 +1,33 @@
+Collection是一个接口，想实现它就得用其子接口间接实现
+如何查看一个类的所有方法和成员变量 视图->工具窗口->结构，快捷键alt+7
+
+Collection的常用方法
+1.增:add(E e)
+2.删:remove(Object o),删除相同元素时，只删除最早添加的同名元素
+3.改:无
+4.查:contains(Object o)
+5.清空:clear()
+6.判空:isEmpty()
+7.长度：size()
+
+集合的遍历：Iterator 迭代器，集合的专用遍历方式，Iterator<E> 迭代器名=集合名.iterator();
+Iterator<E> iterator():返回集合中元素的迭代器，通过集合的iterator()方法得到，E要跟集合泛型一样
+迭代器的常用方法：
+E next(),返回迭代中下一个元素，并移动迭代器位置
+boolean hasNext():如果迭代具有更多元素，则返回true,可以先判断有没有元素，再用next方法获取元素
+注意！Iterator在迭代列表时，不可以对列表进行修改！否则会抛出并发修改异常！同时Iterator也不提供add方法
+同样Iterator只能从头到尾遍历，限制很大，
+
+遍历：
+Collection<String> c=new ArrayList<String>();
+Iterator<String> it=c.iterator();
+while(it.hasNext()){
+    String s=it.next();
+    ......
+}
+
+
+
+
+
+

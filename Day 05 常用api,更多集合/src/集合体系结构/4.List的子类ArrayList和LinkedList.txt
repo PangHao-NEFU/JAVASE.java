@@ -1,0 +1,23 @@
+List常用子类:ArrayList和LinkedList
+
+ArrayList的底层数据结构是数组，查询快增删慢
+LinkedList的底层结构是链表，查询慢但增删快
+其基本使用与List完全一样，不同应用场景具体分析用哪种，都可以通过索引添加或者删除
+
+ArrayList的常用方法：
+ * add（object o），在末尾添加指定元素
+ * add（int index，object o），在指定位置插入元素
+ * bool remove（object o），删除指定元素
+ * E remove（int index），删除指定索引的元素并返回
+ * E set（int index，E element），修改指定索引处的元素，并返回被修改的元素
+ * E get（int index），返回指定索引处元素
+ * int size（），返回集合中元素个数
+
+LinkedList集合特有的方法：
+public void addFirst(E e)在该链表开头插入指定元素
+public void addLast(E e)指定元素追加到链表末尾
+E getFirst()返回链表中第一个元素
+E getLast()返回此列表最后一个元素
+E removeFirst()删除并返回链表第一个元素
+E removeLast()从此列表中删除并返回最后一个元素
+

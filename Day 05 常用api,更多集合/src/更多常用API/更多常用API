@@ -1,0 +1,38 @@
+Math，System，Object，Arrays，基本类型包装类，日期类
+
+1.Math.
+包含执行基本数字运算的方法，如指数，对数，绝对值，平方根和三角函数
+public static int abs(int a)  返回值为int绝对值
+double ceil（double a）返回大于等于a的最小整数，类型为double
+        floor             小于等于
+int round（float a）对a进行四舍五入
+max/min（int a，int b）返回最大值/最小值
+double pow （double a,double b）返回a的b次幂
+double random（）返回[0.0,1.0)之间的一个随机double数
+
+2.System. 不可被实例化
+System.exit(0);终止当前运行java虚拟机，正常方式退出，参数非0表示异常终止
+
+3.toString（）方法，是object类的一个成员方法，建议所有子类重写此方法，可以将对象属性转换为易于读的形式
+  equals（）方法，也建议重写此方法，这两个方法可以按ALT+Insert快速生成
+
+4.Arrays，该类包含用于操作数组的各种方法，如排序和搜索
+重点介绍两个方法，
+String toString（int[] a）返回指定数组内容的字符串表示形式 Arrays.toString(arr);
+和 void sort（int[] a）按照数字升序排列指定的数组         Arrays.sort(arr);
+
+5.基本类型包装类：比如int和Integer，char和Character,byte和Byte，long和Long
+将基本数据类型封装成对象的好处在于可以在对象中定义更多的方法操作该数据
+常用操作：基本数据类型和字符串之间转换
+其中最重要的就是Integer
+构造方法：Integer（int value）和Integer（String s），不过这两种构造方法已经过时了，很少使用，不推荐
+static Integer valueOf（int i）和Integer valueOf（String s）是更常见的方法
+Integer i1=Integer.valueOf（100）;
+Integer i1=Integer.valueOf（"300"）;是更常见的方法
+
+6.自动装箱和拆箱
+Interger i = 100;编译不会报错，因为其底层实现了Integer i=Integer.valueOf（100）;
+这就是自动装箱
+而拆箱是Integer->int，也可以自动完成，而不需要再手动调用i.intValue(),因为编译器会替我们
+自动完成装箱和拆箱功能
+

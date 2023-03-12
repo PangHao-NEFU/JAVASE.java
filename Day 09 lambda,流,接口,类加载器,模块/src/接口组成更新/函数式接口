@@ -1,0 +1,42 @@
+函数式接口
+只有一个抽象方法的接口,Lambda的最爱
+与重写方法的@Override标识一样
+函数式接口的标识@FunctionalInterface,如果在接口定义上方看见它,就说明这是个函数式接口
+
+如果一个方法的参数是一个函数式接口,则可以使用Lambda表达式或匿名内部类的方式进行参数传递
+函数式接口可以做参数也可以做返回值,其余Lambda表达式密不可分,不过也可以使用匿名内部类,就是写起来麻烦
+函数式接口作为参数和返回值,其实只是想要一个函数式接口的一个实现对象!
+
+常用的函数式接口:
+1.Supplier,提供对象的
+Supplier<T> 包含一个无参方法
+T get() 获得一个T类型的结果,至于按照什么逻辑,需要由Lambda表达式由用户实现
+
+
+2.Consumer<T>   使用对象的
+void accept(T t) 对给定参数执行此操作,至于执行什么操作,由用户重写的方法决定
+default Consumer<T> andThen(Consumer<? super T> after) 返回一个组合的 Consumer ，它按顺序执行此操作，然后执行 after操作。
+示例:con1.andThen(con2).accept("123456"),执行逻辑是con1对字符串"123456"操作后,con2对字符串"123456"进行操作
+    具体的操作模式在调用时由用户手动实现,用Lambda表达式重写accept方法
+
+3.Predicate<T> 判断对象的,常用:test,and,or,negative
+default Predicate<T> and(Predicate<? super T> other) 返回一个组合谓词，表示此谓词和另一个谓词的短路逻辑AND。
+static <T> Predicate<T> isEqual(Object targetRef) 返回一个谓词，根据 Objects.equals(Object, Object)测试两个参数是否相等。
+default Predicate<T> negate() 返回表示此谓词的逻辑否定的谓词。
+static <T> Predicate<T> not(Predicate<? super T> target) 返回谓词，该谓词是提供的谓词的否定。
+default Predicate<T> or(Predicate<? super T> other) 返回一个组合谓词，表示此谓词与另一个谓词的短路逻辑OR。
+boolean test(T t) 根据给定的参数计算此谓词(常用)。
+
+
+4.Function<T,R>        T函数输入的类型,R函数结果的类型,常用apply
+default <V> Function<T,V> andThen(Function<? super R,? extends V> after) 返回一个组合函数,现将该函数应用于输入,再将after函数应用于上一步的结果
+    实例:Integer i=fun1.apply(s);
+        String ss=fun2.apply(i);
+        等价于:Stirng ss=fun1.andThen(fun2).apply(s);
+R apply(T t) 将此函数应用于给定的参数。(常用)
+default <V> Function<V,R> compose(Function<? super V,? extends T> before) 返回一个组合函数，该函数首先将 before函数应用于其输入，然后将此函数应用于结果。
+static <T> Function<T,T> identity() 返回一个始终返回其输入参数的函数。
+
+此接口通常用于对参数进行处理,转换(转换逻辑由用户使用Lambda表达式实现),然后返回一个新的值
+
+

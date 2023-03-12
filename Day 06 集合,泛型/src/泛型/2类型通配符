@@ -1,0 +1,19 @@
+为了标识各种泛型List的父类，可以使用类型通配符
+类型通配符<?>
+List<?> 标识元素类型未知的List，它的元素可以匹配任何类型
+这种带通配符的List仅表示他是各种泛型List的父类，并不能把元素添加到其中
+
+List<? extends Number> 表示的类型是Number或者子类型
+List<? super Number>  表示类型是Number或者其父类型
+
+继承关系：Object->Number->Integer
+
+List<?> list=new ArrayList<Object>();
+List<?> list=new ArrayList<Number>();
+List<?> list=new ArrayList<Integer>();
+
+
+
+
+
+

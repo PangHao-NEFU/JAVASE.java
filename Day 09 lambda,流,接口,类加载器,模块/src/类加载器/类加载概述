@@ -1,0 +1,46 @@
+1.类加载
+当程序使用某个类时,系统会通过类的加载,类的连接,类的初始化这三个步骤来对类进行初始化.
+
+2.反射
+在运行时去获取一个类的变量和方法信息,然后通过获取到的信息来创建对象,调用方法的一种机制
+由于这种动态性,可以极大地增强程序的灵活性,程序不用再编译阶段就完成确定,在运行期间依然可以扩展
+
+3.获取Class类对象
+我们想通过反射使用一个类,首先要获取类的字节码文件,也就是类型为Class类型的对象
+有三种方法:
+    1.使用类的class属性,格式: 类名.class
+    2.调用对象的getClass()方法,格式: 对象.getClass()
+    3.使用Class类中的静态方法forName(string className),参数是某个类的全路径
+
+4.反射获取构造方法并使用
+    .getConstructors(),返回Constructor对象的数组,Constructor对象反映了该Class对象表示的类的所有公共(public)构造方法
+    .getDeclaredConstructors(),同上,但是可以获取私有或默认构造方法了
+    .getConstructor(Class<?>... parameterTypes),返回一个公共构造器对象,
+    .getDeclaredConstructors(Class<?>... parameterTypes),返回一个指定构造器对象
+    参数:你要获取的构造方法的参数的个数和参数数据类型对应的.class文件对象,比如构造方法参数是String,那上方对应参数就是String.class
+    得到了构造方法对象,可以对其使用了,使用构造方法对象调用如下方法
+    .newInstance(实参),即可创建对象
+    注意:如果获取了私有构造方法,可以通过暴力反射取消权限检查 .setAccessible(true)
+
+5.反射获取成员变量并使用
+    成员变量也叫字段(Field),所以去getField找
+    Field[] getDeclaredFields(),获得所有成员变量对象的数组
+    Field getDeclaredField(String name)     name就是想要获取的成员变量名的字符串
+    给成员变量赋值
+    Field field=c.getField("address")
+    field.set(obj,"北京")      obj为已经创建的对象,这步就是给obj对象的address属性赋值为"北京"
+    同样,如果访问私有属性,需要对私有属性的对象调用.setAccessible(true)
+
+6.反射获取成员方法并使用
+    Method[] getMethods()   返回方法对象反映该Class对象表示的类或接口的所有公共方法,包含继承自父类的
+    Method[] getDeclaredMethods()   包含本类所有方法,但不包含继承的
+
+    获取单个方法
+    Method getmethod(String name,Class<?>... parameterTypes) 返回一个方法对象,name就是方法名的字符串表示
+    后面是方法的参数对应的类对象,比如String.class,int.class等
+    Method getDeclaredmethod(String name,Class<?>... parameterTypes),使用方法同上
+
+    使用成员方法对象
+    method.invoke(obj,方法需要的实际参数)    返回此方法的返回值
+
+反射可以做一些正常看起来做不到的事

@@ -1,0 +1,42 @@
+List集合概述和特点
+有序集合，也被称为序列，用户可以精确控制列表中每个元素的插入位置，
+可以通过整数索引访问元素并搜索列表重元素与Set集合不同，
+列表通常允许有重复的元素
+
+特点：有序（存储和取出元素顺序一致，FIFO），可重复
+List继承自Collection集合，Collection集合有的方法都可以用，List同样也是接口，只能通过ArrayList或
+LinkedList来进行实例化
+
+List特有方法：
+增：void add(int index,E element),指定位置插入元素
+删：E remove（int index）删除指定索引处元素，返回被删除的元素
+改：E set（int index, E element）修改指定索引处的元素，返回被修改的元素
+查：E get（int index）返回指定索引处的元素
+
+List特有迭代器，ListIterator，通过List集合的实例调用listIterator()方法得到
+ListIterator继承自Iterator，同样也是个接口
+ListIterator是允许程序员沿任意方向遍历列表的，不像Iterator只能从头到尾遍历
+而且其可以在迭代期间修改列表，并获取列表中迭代器当前的位置，其比Iterator更加高级
+
+ListIterator常用方法
+增：add（E e），将指定元素插入列表，该元素紧接在next()返回的元素之前插入（如果有），
+并且在previous()返回的元素之后插入 （如果有）。 （如果列表不包含任何元素，则新元素将成为列表中的唯一元素。）
+新元素在隐式游标之前插入：对next的后续调用不受影响，随后对previous调用将返回新元素。
+举例：["java" ,迭代器位置 "se"]，it.add("me")后，变为["java","me",迭代器位置 "se"]
+
+
+向前/后移动迭代器并返回其前/后的值：previous（），next（），
+查看迭代器前后位置：
+    返回后续调用 next()将返回的元素的索引：int nextIndex（）
+    返回后续调用 previous()将返回的元素的索引：int previousIndex()
+hasNext（），如果此列表迭代器在向前遍历列表时具有更多元素，则返回 true 。
+hasPrevious（），如果此列表迭代器在反向遍历列表时具有更多元素，则返回 true 。
+
+List<String> list=new ArrayList<String>(); //先创建列表对象
+ListIterator<String> lit=list.listItorator();//再获取此列表的迭代器
+lit.add("JAVA");//可以通过迭代器添加元素
+注意！一旦获取列表迭代器后，如果再通过集合的方式添加元素，会抛出异常！
+迭代器的位置似乎在于两个元素中间，next（）和previous（）的两元素是相邻的
+索引：, 0 , 1 , 2 , 3 , 4 ,
+逗号的位置就是迭代器的位置
+

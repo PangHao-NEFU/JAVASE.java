@@ -1,0 +1,22 @@
+增强for：简化数组和Collection集合的遍历
+实现Iterable接口的类允许其对象称为增强型for的目标
+内部原理是一个Iterator迭代器
+格式：
+    for(元素数据类型 变量名:数组或Collection集合){
+        此处可以直接使用变量，上方的变量名就是元素；
+    }
+
+    int[] arr={1,2,3,4,5}
+    for(int i:arr){
+        System.out.println(i);
+    }
+
+List集合有三种遍历方式
+1.最原始的for循环，用get(i)的方式来遍历
+2.迭代器方式，集合特有的遍历方式，利用迭代器的hasNext(),
+和next()方法进行遍历
+3.增强for循环，也是最方便最快捷的遍历方式，其本质是1和2的结合
+    for（E e：list）{
+    }
+
+

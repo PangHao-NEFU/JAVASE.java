@@ -1,0 +1,61 @@
+Stream是一个接口,通常与Lambda一起使用,可以对集合,数组进行挑选,过滤操作
+
+常见操作方法:
+
+.filter(Predicate predicate)方法实际是一个过滤器,需要重写Predicate接口中的boolean test(T t)方法
+.filter(需要过滤的内容).forEach(对每个过滤出来的元素执行的操作),括号内均用匿名内部类或Lambda实现
+格式:
+    生成流:list.stream()
+    中间操作:.filter()
+    终结操作:forEach()
+
+Stream流常见生成方式
+Collection体系的集合可以使用默认方法.stream()生成流
+    default Stream<E> stream()
+Map体系集合可以间接生成流,可以通过方法.keySet()获得键的集合,再调用键集的.stream()方法,值集同样也可以
+    用.entrySet()获得键值对后,也可以对键值对调用.stream()
+数组可以通过Stream接口的静态方法of(T... values)生成流
+    Stream.of(数组)
+
+其他常见中间操作方法:
+Stream<T> limit(long maxSize)   返回此流中的元素组成的流,截取前指定参数个数的数据
+Stream<T> skip(long n)  跳过指定参数个数的数据,返回剩余元素组成的流
+
+static<T> Stream<T> concat(Stream a,Stream b)   合并a,b两个流为一个流,此方法为静态方法,需要接口名调用
+Stream<T> distinct()    返回由该流的不同元素(根据.equals()方法)组成的流,就没有重复元素了
+
+Stream<T> sorted()  返回由此元素组成的流,按自然排序进行排序
+Stream<T> sorted(Comparator comparator):    返回由此元素支撑的流,根据提供的比较器进行排序
+
+<R> Stream<R> map(Function mapper):返回有给定函数应用于此流的元素的结果组成的流
+    需要重写Function接口中的方法,R apply(T t)
+IntStream mapToInt(ToIntFunction<? super T> mapper) 返回 IntStream其中包含将给定函数应用于此流的元素的结果。
+    IntStream表示原始int流,是一个接口,其有一个非常有用的方法.sum(),可以对流中int元素求和
+    ToIntFunction接口中的方法 int applyAsInt(T value)需要重写
+
+终结方法:
+void forEach(Consumer action)   对此流中元素执行操作
+    Consumer接口中需要重写的方法: void accept(T t)    对给定参数执行此操作
+long count()    返回此流中有几个元素
+
+流中数据的收集,对数据使用Stream流的方式操作完毕后,收集到集合中
+R collect (Collector collector)
+    Collector叫收集器,是一个接口
+    Collectors这个工具类提供了具体的收集方式
+    public static <T> Collector toList():将元素收集到List集合
+                                toSet():将元素收集到Set集合
+    public static Collector toMap(Function keyMapper,Function valueMapper):将元素收到Map集合中
+
+    示例:
+        List<String> list = listStream.collect(Collectors.toList())
+        Map<String,Integer> map = arrayStream.collect(Collectors.toMap(s->s.split(",")[0],s->Integer.parseInt(s->s.split(",")[1])))
+        其中listStream和arrayStream都是已经经过处理后的流,类型是Stream<Integer>和Stream<String>
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,6 @@
+Collections概述
+是针对集合操作的工具类
+collections类的常用方法
+Collections.sort(list<T> list) 将指定列表按升序排列
+Collections.reverse(List<?> list) 反转指定列表中元素的顺序
+Collections.shuffle(List<?> list) 使用默认的随机源随机排列指定的列表

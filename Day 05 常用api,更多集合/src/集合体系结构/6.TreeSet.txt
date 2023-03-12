@@ -1,0 +1,34 @@
+TreeSet
+特点：元素有序，但是与存储和取出顺序不一样，是按照一定的规则排序，
+默认来说是自然排序，但具体排序方式取决于构造方法
+TreeSet():默认根据元素的自然排序进行排序，排序顺序自定义可以通过实现自然排序接口
+TressSet(Comparator comparator):根据指定的比较器进行排序,参数为一个比较器的实现对象
+没有带索引的方法，只能用迭代器和增强for循环遍历
+
+ps：集合中元素的类型不可用基本数据类型，需要用基本类型的包装类类型，比如Integer
+
+两种排序的实现方式：
+1.Comparable,自然排序接口，让元素所属实体类实现Comparable接口，然后重写compareTo(E e)方法，
+就可以在添加元素时自动进行自然排序
+实现详情可以查看HashSet.wife
+compareTo(E e)，返回正数时说明this比e大，返回0表示相等，返回负数就说明this比e小
+通常在定义对象的类中实现，this表示当前添加的元素，参数e表示之前添加的元素
+
+2.Comparator,比较接口，在测试类中实现，从匿名内部类的方式直接使用,更加灵活和方便
+比较器排序更加直观，而且不用修改对象的原有类
+int compare(T o1, T o2) 比较它的两个参数的顺序。 返回负整数，零或正整数，因为第一个参数小于，等于或大于第二个参数。
+
+
+TreeSet<Wife> ts=new TreeSet<Wife>(new Comparator<Wife>{
+    @Override
+    public int compare(Wife w1,Wife w2){
+        int num = w1.getAge()-w2.getAge();      //主要条件
+        return num==0?w1.getName().compareTo(w2.getName()):num;//次要条件
+    }
+});
+通常来说第一个参数是后添加的元素，第二个参数是之前添加的元素
+
+
+
+
+

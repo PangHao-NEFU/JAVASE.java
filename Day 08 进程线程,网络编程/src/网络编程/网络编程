@@ -1,0 +1,86 @@
+网络编程
+网络编程三要素：ip，端口，协议（常用udp和tcp协议）
+
+1.ip：主机的唯一标识
+InetAddress的使用
+方便对ip获取和操作
+static InetAddress getByName（String host）根据主机名称确定主机的IP地址。
+String getHostName()    获取此ip地址的主机名
+String getHostAddress()     返回文本现实中的ip地址字符串
+static InetAddress getLocalHost() 返回本地主机的地址。
+String getHostAddress() 返回文本表示中的IP地址字符串。
+
+2.端口
+设备商应用程序的唯一标识
+端口号：两个字节标识的整数，取值0~65535
+
+3.协议，连接和通信的规则
+UDP协议：User Datagram Protocol用户数据报协议，无连接，不可靠，不会给出反馈
+TCP协议：传输控制协议，面向连接的通信协议，先建立逻辑连接，再传输数据，每次连接的创建
+        都要经过三次握手
+三次握手：第一次，客户端向服务器端发出连接请求，等待服务器确认
+        第二次，服务器端向客户端回送相应，通知客户端收到连接请求
+        第三次，客户端再次向服务器发送确认信息，确认连接
+
+4.UDP通信原理：
+在通信两端各建立一个Socket对象，但这两个socket只是发送，接受数据的对象
+没有客户端和服务器端的概念
+提供了DatagramSocket类作为UDP协议的socket
+
+UDP发送数据：
+    1.创建DatagramSocket对象,
+        DatagramSocket()
+    2.创建数据，并把数据打包,
+        DatagramPacket(byte[] buf, int length, InetAddress address, int port)
+    3.调用DatagramSocket对象的方法发送数据
+        .send(DatagramPacket p)
+    4.关闭发送端
+        .close()
+
+UDP接收收据
+    1.创建接收端Socket对象
+        DatagramSocket ds = new DatagramSocket(10086);指定端口，带参构造
+    2.创建一个数据包用于接收数据
+        DatagramPacket dp = new DatagramPacket(bytes, bytes.length);
+    3.调用DatagramSocket对象的方法接收数据
+        ds.receive(dp)
+    4.解析数据包，并处理数据
+        byte[] gotdata = dp.getData();  //获取接收的数据
+        int dpLength = dp.getLength();  //确定实际接收数据的长度
+        String s = new String(gotdata,0,dpLength);
+    5.关闭接收端
+        ds.close();
+
+5.TCP协议，通过io流来传输数据
+JAVA为客户端提供了Socket类，为服务器端提供了ServerSocket类
+
+发送数据的步骤：
+    1.创建客户端Scoket对象
+        Socket(InetAddress address, int port)创建流套接字并将其连接到指定IP地址处的指定端口号。
+        Socket socket = new Socket(InetAddress.getLocalHost().getHostAddress(), 10000);
+    2.获取输出流，写数据
+        OutputStream os=socket.getOutputStream();
+        os.write("hello world".getBytes(StandardCharsets.UTF_8));
+    3.释放资源
+        s.close();
+
+
+接收数据的步骤：
+    1.创建服务器端ServerSocket对象
+        ServerSocket ss = new ServerSocket(10001);
+    2.监听客户端连接，返回一个socket对象
+        Socket socket = ss.accept();
+    3.获取输入流，读数据，并处理数据
+        InputStream is = socket.getInputStream();
+        byte[] bytes = new byte[1024];
+        int len = is.read(bytes);
+        String s = new String(bytes, 0, len);
+    4.释放资源
+        ss.close();
+    ps：如果用字符流传输数据，用BufferedReader包装InputStreamReader包装InputStream即可
+        写数据流也是同样这么包装
+
+解决客户端服务端相互等待而出现的死锁情况
+    如果客户端结束发送数据，应该告知服务端数据已传输结束，请服务器给出响应
+    应该在客户端的socket对象调用.shutdownOutput()方法，一旦服务端读取此标记，会停止等待，向下进行
+

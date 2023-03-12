@@ -1,0 +1,12 @@
+集合体系结构的使用经常在算法题中出现，请认真学习！
+回顾：我们之前学过ArrayList集合（Day 02），
+集合类的特点：提供一种存储空间可变的存储模型，存储的数据容量可以随时发生改变
+接口：Collection:List,Set;Map
+具体实现的类：ArrayList,LinkedList,HashSet,TreeSet,HashMap
+
+1.单列集合：Collection(接口)，
+其中包含两种类型，List可重复元素（接口），和Set不可重复元素（接口）
+List的实现类：ArrayList列表，LinkedList链表，....
+Set的实现类：HashSet，TreeSet
+
+2.双列集合：Map，主要学习HashMap
